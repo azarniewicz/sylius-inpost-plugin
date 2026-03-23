@@ -1,0 +1,15 @@
+{% set previewId = wrapperId|default(order is defined and order ? "order_#{ order.id }_point_details" : 'inpost_point_details') %}
+{% set pointName = order is defined and order and order.point ? order.point.name : null %}
+
+<div
+    id="{{ previewId }}"
+    class="bb-inpost-point-wrapper"
+    {% if pointName %}
+        data-bb-event="preview-inpost-point"
+        data-bb-point="{{ pointName }}"
+    {% endif %}
+>
+    {% if not pointName %}
+        <b>{{ 'azarniewicz_sylius_inpost_plugin.ui.no_point_selected'|trans }}</b>
+    {% endif %}
+</div>

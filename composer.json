@@ -1,0 +1,36 @@
+{
+    "name": "azarniewicz/sylius-inpost-plugin",
+    "description": "Simple InPost Paczkomat integration for Sylius 2.0+",
+    "type": "sylius-plugin",
+    "keywords": ["sylius", "inpost", "paczkomat", "shipping"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "sylius/sylius": "^2.0",
+        "symfony/http-client": "^6.4|^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "behat/behat": "^3.13",
+        "friends-of-behat/symfony-extension": "^2.4",
+        "friends-of-behat/page-object-extension": "^0.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Azarniewicz\\SyliusInPostPlugin\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Azarniewicz\\SyliusInPostPlugin\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        },
+        "symfony": {
+            "bundle": "Azarniewicz\\SyliusInPostPlugin\\AzarniewiczSyliusInPostPlugin"
+        }
+    }
+}

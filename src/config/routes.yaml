@@ -1,0 +1,4 @@
+azarniewicz_sylius_inpost_plugin_shop_add_point_to_order:
+    path: /point
+    methods: [GET]
+    controller: Azarniewicz\SyliusInPostPlugin\Controller\AddPointToOrderAction

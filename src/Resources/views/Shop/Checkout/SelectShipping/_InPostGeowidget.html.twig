@@ -1,0 +1,14 @@
+{% set wrapperId = "#{ form.vars.id }_details" %}
+
+<div class="bb-inpost-point d-none" data-bb-target="inpost-geowidget">
+    {% include "@AzarniewiczSyliusInPostPlugin/InPostGeowidgetPreview.html.twig" with { wrapperId: wrapperId, order: null } %}
+    <button
+        data-bb-event="select-inpost-point"
+        data-bb-path="{{ path('azarniewicz_sylius_inpost_plugin_shop_add_point_to_order') }}"
+        data-bb-target="#{{ wrapperId }}"
+        class="bb-inpost-point-btn"
+        type="button"
+    >
+        {{ 'azarniewicz_sylius_inpost_plugin.ui.select_point'|trans }}
+    </button>
+</div>

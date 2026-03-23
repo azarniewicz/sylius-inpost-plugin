@@ -1,0 +1,5 @@
+azarniewicz_sylius_inpost_plugin:
+    ui:
+        select_point: Select Parcel Locker
+        selected_point: Selected Parcel Locker
+        no_point_selected: No parcel locker selected

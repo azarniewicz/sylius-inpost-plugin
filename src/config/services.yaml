@@ -1,0 +1,27 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Azarniewicz\SyliusInPostPlugin\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Model,DependencyInjection}'
+
+    # Factory
+    azarniewicz.sylius_inpost_plugin.factory.inpost_point:
+        class: Azarniewicz\SyliusInPostPlugin\Factory\InPostPointFactory
+        public: true
+
+    Azarniewicz\SyliusInPostPlugin\Factory\InPostPointFactory: '@azarniewicz.sylius_inpost_plugin.factory.inpost_point'
+
+    # Validator
+    Azarniewicz\SyliusInPostPlugin\Validator\HasPhoneNumberInPostOrderValidator:
+        tags:
+            - { name: validator.constraint_validator, alias: azarniewicz_has_phone_number_in_post_order }
+
+    # Controller
+    Azarniewicz\SyliusInPostPlugin\Controller\AddPointToOrderAction:
+        arguments:
+            $inPostPointFactory: '@azarniewicz.sylius_inpost_plugin.factory.inpost_point'
+        tags: ['controller.service_arguments']

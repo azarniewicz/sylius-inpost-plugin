@@ -1,0 +1,3 @@
+azarniewicz_sylius_inpost_plugin:
+    order:
+        phone_number_required: 'Do wysyłki paczkomatem InPost potrzebne jest podanie numeru telefonu. Wróć do poprzedniego kroku formularza i uzupełnij dane.'
