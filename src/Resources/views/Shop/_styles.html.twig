@@ -1,2 +1,4 @@
-<link rel="stylesheet" href="https://geowidget.easypack24.net/css/easypack.css"/>
-{{ encore_entry_link_tags('azarniewicz-inpost-shop', null, 'inpost_shop') }}
+{% if app.request.attributes.get('_route') == 'sylius_shop_checkout_select_shipping' %}
+    <link rel="stylesheet" href="https://geowidget.easypack24.net/css/easypack.css"/>
+    {{ encore_entry_link_tags('azarniewicz-inpost-shop', null, 'inpost_shop') }}
+{% endif %}

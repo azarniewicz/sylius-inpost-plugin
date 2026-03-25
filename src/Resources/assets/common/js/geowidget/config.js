@@ -9,6 +9,8 @@ const DEFAULT_SELECTORS = {
 
 const DEFAULT_EASYPACK_CONFIG = {
     defaultLocale: 'pl',
+    locale: 'pl',
+    lang: 'pl',
     mapType: 'osm',
     searchType: 'osm',
     points: {

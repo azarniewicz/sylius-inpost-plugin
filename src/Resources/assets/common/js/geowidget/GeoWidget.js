@@ -10,7 +10,13 @@ export class GeoWidget {
     }
 
     init() {
-        window.easyPackAsyncInit = () => easyPack.init(this.easyPackConfig);
+        window.easyPackAsyncInit = () => {
+            easyPack.init(this.easyPackConfig);
+
+            if (typeof easyPack.changeLanguage === 'function') {
+                easyPack.changeLanguage('pl');
+            }
+        };
 
         this.initButtons();
         this.initPreviews();

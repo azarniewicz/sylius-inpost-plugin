@@ -1,8 +1,8 @@
 .bb-inpost-point {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacer * 0.75;
     margin: $spacer 0;
     padding: $spacer;
     border: 1px solid $gray-200;
@@ -21,6 +21,7 @@
     &-wrapper {
         display: flex;
         align-items: center;
+        width: 100%;
     }
 
     &-img {

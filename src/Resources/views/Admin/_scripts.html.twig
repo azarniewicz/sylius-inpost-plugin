@@ -1,2 +1,4 @@
-<script src="https://geowidget.easypack24.net/js/sdk-for-javascript.js"></script>
-{{ encore_entry_script_tags('azarniewicz-inpost-admin', null, 'inpost_admin') }}
+{% if app.request.attributes.get('_route') == 'sylius_admin_order_show' %}
+    <script src="https://geowidget.easypack24.net/js/sdk-for-javascript.js"></script>
+    {{ encore_entry_script_tags('azarniewicz-inpost-admin', null, 'inpost_admin') }}
+{% endif %}

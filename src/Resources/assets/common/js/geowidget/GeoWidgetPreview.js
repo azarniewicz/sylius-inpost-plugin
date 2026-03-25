@@ -11,7 +11,11 @@ export class GeoWidgetPreview {
         try {
             if (!code) return false;
 
-            const response = await fetch(`${this.apiPoints}/${code}`);
+            const url = new URL(`${this.apiPoints}/${code}`);
+            url.searchParams.set('lang', 'pl');
+            url.searchParams.set('locale', 'pl');
+
+            const response = await fetch(url);
 
             if (!response.ok) throw Error(response.statusText);
 
