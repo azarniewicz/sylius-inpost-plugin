@@ -3,7 +3,9 @@ import {ValidateNextBtn} from './nextBtnValidation';
 
 export class InpostPointEvents {
     constructor(config = {}) {
-        this.inputs = [...document.querySelectorAll('[value="inpost_point"]')];
+        this.widget = document.querySelector('[data-bb-target="inpost-geowidget"]');
+        this.shippingMethodCode = this.widget?.dataset.bbShippingMethodCode || 'inpost_point';
+        this.inputs = [...document.querySelectorAll(`[value="${this.shippingMethodCode}"]`)];
         this.shippingGroups = this.inputs.map((input) => [...document.querySelectorAll(`[name="${input.name}"]`)]);
         this.defaultConfig = {
             validateNextBtn: true,
@@ -20,14 +22,14 @@ export class InpostPointEvents {
         }
 
         let pointSelected = false;
-        this.inputs.forEach(input => {
+        this.inputs.forEach((input) => {
             if (input.checked === true) {
                 pointSelected = true;
             }
-        })
+        });
 
         if (pointSelected === true) {
-            this.showInpostPointSelector()
+            this.showInpostPointSelector();
         }
 
         this.watchInputChanges();
@@ -36,26 +38,24 @@ export class InpostPointEvents {
     hideInpostPointSelector() {
         document.querySelector('[data-bb-target="inpost-geowidget"]')?.classList.add('d-none');
     }
-    
+
     showInpostPointSelector() {
         document.querySelector('[data-bb-target="inpost-geowidget"]')?.classList.remove('d-none');
     }
-    
 
     watchInputChanges() {
         this.shippingGroups.forEach((groupFields) => {
             groupFields.forEach((field) => {
                 field.addEventListener('change', () => {
-
-                    if (field.value === 'inpost_point' && field.checked === true) {
-                        this.showInpostPointSelector()
+                    if (field.value === this.shippingMethodCode && field.checked === true) {
+                        this.showInpostPointSelector();
                     } else {
-                        this.hideInpostPointSelector()
+                        this.hideInpostPointSelector();
                     }
 
                     triggerCustomEvent(
                         field,
-                        `inpost.point.${field.value === 'inpost_point' ? 'selected' : 'deselected'}`
+                        `inpost.point.${field.value === this.shippingMethodCode ? 'selected' : 'deselected'}`
                     );
                 });
 

@@ -39,9 +39,13 @@ export class GeoWidgetButton {
 
     async onModalClose({point, modal}) {
         const path = this.button.dataset.bbPath;
-        const savedPoint = await this._savePoint(`${path}?name=${point.name}`);
+        const savedPoint = await this._savePoint(path, point.name);
 
-        if (this.container !== 'undefined') {
+        if (!savedPoint) {
+            return;
+        }
+
+        if (this.container) {
             new GeoWidgetPreview(this.container).renderTemplate(savedPoint);
         }
 
@@ -50,11 +54,23 @@ export class GeoWidgetButton {
         modal.closeModal(savedPoint);
     }
 
-    async _savePoint(path) {
+    async _savePoint(path, pointName) {
         triggerCustomEvent(this.button, 'inpost.point.save.before');
 
         try {
-            const response = await fetch(path);
+            const csrfToken = this.button.dataset.bbCsrfToken;
+            const response = await fetch(path, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: new URLSearchParams({
+                    name: pointName,
+                    _token: csrfToken,
+                }).toString(),
+                credentials: 'same-origin',
+            });
 
             if (!response.ok) throw Error(response.statusText);
             const data = await response.json();

@@ -1,11 +1,16 @@
 {% set wrapperId = "#{ form.vars.id }_details" %}
 
-<div class="bb-inpost-point d-none" data-bb-target="inpost-geowidget">
+<div
+    class="bb-inpost-point d-none"
+    data-bb-target="inpost-geowidget"
+    data-bb-shipping-method-code="{{ azarniewicz_sylius_inpost_shipping_method_code }}"
+>
     {% include "@AzarniewiczSyliusInPostPlugin/InPostGeowidgetPreview.html.twig" with { wrapperId: wrapperId, order: null } %}
     <button
         data-bb-event="select-inpost-point"
         data-bb-path="{{ path('azarniewicz_sylius_inpost_plugin_shop_add_point_to_order') }}"
         data-bb-target="#{{ wrapperId }}"
+        data-bb-csrf-token="{{ csrf_token('azarniewicz_sylius_inpost.add_point') }}"
         class="bb-inpost-point-btn"
         type="button"
     >

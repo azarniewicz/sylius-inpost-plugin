@@ -22,7 +22,13 @@ Simple InPost Paczkomat integration for Sylius 2.0+
 
 ### 1. Install via Composer
 
-For local development (path repository):
+Production install:
+
+```bash
+composer require azarniewicz/sylius-inpost-plugin
+```
+
+For local development with a path repository:
 
 ```bash
 composer config repositories.azarnie-inpost path ../azarniewicz-sylius-inpost-plugin
@@ -92,27 +98,7 @@ const [inpostShop, inpostAdmin] = require('./vendor/azarniewicz/sylius-inpost-pl
 module.exports = [...yourExistingConfigs, inpostShop, inpostAdmin];
 ```
 
-Add to `config/packages/assets.yaml`:
-
-```yaml
-framework:
-    assets:
-        packages:
-            inpost_shop:
-                json_manifest_path: '%kernel.project_dir%/public/build/azarniewicz/inpost/shop/manifest.json'
-            inpost_admin:
-                json_manifest_path: '%kernel.project_dir%/public/build/azarniewicz/inpost/admin/manifest.json'
-```
-
-Add to `config/packages/webpack_encore.yaml`:
-
-```yaml
-webpack_encore:
-    output_path: '%kernel.project_dir%/public/build'
-    builds:
-        inpost_admin: '%kernel.project_dir%/public/build/azarniewicz/inpost/admin'
-        inpost_shop: '%kernel.project_dir%/public/build/azarniewicz/inpost/shop'
-```
+The plugin auto-registers the required asset packages and Encore builds through the bundle extension.
 
 ### 7. Build Assets
 
@@ -131,7 +117,7 @@ npm run build
     
     {# Your existing radio button/selection markup #}
     
-    {% if method.code == 'inpost_point' %}
+    {% if method.code == azarniewicz_sylius_inpost_shipping_method_code %}
         <div class="mt-3" data-inpost-geowidget>
             {% include "@AzarniewiczSyliusInPostPlugin/Shop/Checkout/SelectShipping/_InPostGeowidget.html.twig" %}
         </div>
@@ -156,7 +142,7 @@ npm run build
 
 ### 9. Configure Shipping Method
 
-Create or update your shipping method with code `inpost_point`:
+Create or update your shipping method so its code matches `shipping_method_code` from the plugin configuration (`inpost_point` by default):
 
 ```yaml
 # config/fixtures/shipping_methods.yaml
@@ -173,6 +159,16 @@ shipping_method:
                     amount: 1200  # 12.00 PLN
 ```
 
+### 10. Optional Plugin Configuration
+
+The production defaults work out of the box, but you can override them in `config/packages/azarniewicz_sylius_inpost.yaml`:
+
+```yaml
+azarniewicz_sylius_inpost:
+    shipping_method_code: 'inpost_point'
+    api_base_url: 'https://api-pl-points.easypack24.net/v1/points'
+```
+
 ## Usage
 
 1. Customer selects "Paczkomat InPost" shipping method during checkout
@@ -187,20 +183,20 @@ shipping_method:
 
 1. When customer selects InPost shipping method, JavaScript displays the geowidget
 2. Customer clicks "Wybierz Paczkomat" to open the InPost map modal
-3. After selecting a paczkomat, AJAX request saves it to the cart via `/point?name={code}`
+3. After selecting a paczkomat, AJAX request saves it to the cart via `POST /inpost/point`
 4. The selected paczkomat is displayed with image and address
 5. Phone number validation ensures customer provided contact details
 
 ### Admin View
 
-- Order detail page shows selected paczkomat code
+- Order detail page shows the selected paczkomat details
 - JavaScript fetches full details (image, address) from InPost API
-- Display is read-only (simplified design, no admin modification)
+- Display is read-only in admin
 
 ## API Integration
 
 The plugin fetches paczkomat details from InPost public API:
-- **Endpoint**: `https://api-pl-points.easypack24.net/v1/points/{code}`
+- **Endpoint**: `https://api-pl-points.easypack24.net/v1/points/{code}` by default, configurable via `api_base_url`
 - **Usage**: Display paczkomat images and addresses
 - **No authentication required** for public point data
 

@@ -4,13 +4,14 @@ import {DEFAULT_SELECTORS} from './config';
 export class GeoWidgetPreview {
     constructor(node) {
         this.wrapper = node;
+        this.apiPoints = this.wrapper?.dataset.bbApiPoints || API_POINTS;
     }
 
     async renderFromCode(code) {
         try {
             if (!code) return false;
 
-            const response = await fetch(`${API_POINTS}/${code}`);
+            const response = await fetch(`${this.apiPoints}/${code}`);
 
             if (!response.ok) throw Error(response.statusText);
 
@@ -32,22 +33,35 @@ export class GeoWidgetPreview {
         }
 
         this.wrapper.innerHTML = '';
-        this.wrapper.insertAdjacentHTML(
-            'beforeend',
-            `
-            <img src="${data.image_url}" class="bb-inpost-point-img"/>
-            <div class="bb-inpost-point-desc" ${DEFAULT_SELECTORS.previewRaw}>
-                <b>
-                    ${data.name}
-                </b>
-                <p>
-                    ${data.address.line1}<br>
-                    ${data.address.line2}<br>
-                    <small>${data.location_description}</small>
-                </p>
-            </div>
-        `
-        );
+
+        const image = document.createElement('img');
+        image.className = 'bb-inpost-point-img';
+        image.src = data.image_url;
+        image.alt = data.name;
+
+        const description = document.createElement('div');
+        description.className = 'bb-inpost-point-desc';
+        description.setAttribute(DEFAULT_SELECTORS.previewRaw, '');
+
+        const name = document.createElement('b');
+        name.textContent = data.name;
+
+        const address = document.createElement('p');
+        address.append(this.createTextLine(data.address?.line1));
+        address.append(document.createElement('br'));
+        address.append(this.createTextLine(data.address?.line2));
+        address.append(document.createElement('br'));
+
+        const locationDescription = document.createElement('small');
+        locationDescription.textContent = data.location_description || '';
+        address.append(locationDescription);
+
+        description.append(name, address);
+        this.wrapper.append(image, description);
+    }
+
+    createTextLine(value) {
+        return document.createTextNode(value || '');
     }
 }
 

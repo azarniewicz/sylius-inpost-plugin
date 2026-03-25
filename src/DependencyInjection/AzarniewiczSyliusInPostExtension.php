@@ -14,8 +14,18 @@ final class AzarniewiczSyliusInPostExtension extends Extension implements Prepen
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
+        $config = $this->processConfiguration(new Configuration(), $configs);
+
+        $container->setParameter('azarniewicz_sylius_inpost.shipping_method_code', $config['shipping_method_code']);
+        $container->setParameter('azarniewicz_sylius_inpost.api_base_url', rtrim($config['api_base_url'], '/'));
+
         $loader = new YamlFileLoader($container, new FileLocator(\dirname(__DIR__) . '/config'));
         $loader->load('services.yaml');
+    }
+
+    public function getAlias(): string
+    {
+        return 'azarniewicz_sylius_inpost';
     }
 
     public function prepend(ContainerBuilder $container): void
@@ -47,6 +57,10 @@ final class AzarniewiczSyliusInPostExtension extends Extension implements Prepen
             $container->prependExtensionConfig('twig', [
                 'paths' => [
                     $viewsDir => 'AzarniewiczSyliusInPostPlugin',
+                ],
+                'globals' => [
+                    'azarniewicz_sylius_inpost_shipping_method_code' => '%azarniewicz_sylius_inpost.shipping_method_code%',
+                    'azarniewicz_sylius_inpost_api_base_url' => '%azarniewicz_sylius_inpost.api_base_url%',
                 ],
             ]);
         }

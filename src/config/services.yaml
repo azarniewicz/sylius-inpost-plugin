@@ -20,6 +20,14 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: azarniewicz_has_phone_number_in_post_order }
 
+    Azarniewicz\SyliusInPostPlugin\Checker\ShippingMethodChecker:
+        arguments:
+            $shippingMethodCode: '%azarniewicz_sylius_inpost.shipping_method_code%'
+
+    Azarniewicz\SyliusInPostPlugin\Client\InPostApiClient:
+        arguments:
+            $apiBaseUrl: '%azarniewicz_sylius_inpost.api_base_url%'
+
     # Controller
     Azarniewicz\SyliusInPostPlugin\Controller\AddPointToOrderAction:
         arguments:
