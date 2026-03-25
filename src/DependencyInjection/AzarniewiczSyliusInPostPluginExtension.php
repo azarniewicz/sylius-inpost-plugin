@@ -18,6 +18,7 @@ class AzarniewiczSyliusInPostPluginExtension extends Extension implements Prepen
 
         $container->setParameter('azarniewicz_sylius_inpost.shipping_method_code', $config['shipping_method_code']);
         $container->setParameter('azarniewicz_sylius_inpost.api_base_url', rtrim($config['api_base_url'], '/'));
+        $container->setParameter('azarniewicz_sylius_inpost.geowidget_token', $config['geowidget_token']);
 
         $loader = new YamlFileLoader($container, new FileLocator(\dirname(__DIR__) . '/config'));
         $loader->load('services.yaml');
@@ -63,6 +64,7 @@ class AzarniewiczSyliusInPostPluginExtension extends Extension implements Prepen
                 'globals' => [
                     'azarniewicz_sylius_inpost_shipping_method_code' => $config['shipping_method_code'],
                     'azarniewicz_sylius_inpost_api_base_url' => rtrim($config['api_base_url'], '/'),
+                    'azarniewicz_sylius_inpost_geowidget_token' => $config['geowidget_token'],
                 ],
             ]);
         }

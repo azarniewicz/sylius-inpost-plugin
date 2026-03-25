@@ -30,6 +30,16 @@
         }
     }
 
+    &-widget {
+        width: 100%;
+    }
+
+    inpost-geowidget {
+        display: block;
+        width: 100%;
+        min-height: 32rem;
+    }
+
     &-img {
         width: 120px;
         border-radius: $border-radius;

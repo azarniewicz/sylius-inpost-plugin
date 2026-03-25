@@ -4,4 +4,26 @@
     &__map:not(.mobile) {
         overflow: auto !important;
     }
+
+    .leaflet-popup-content-wrapper,
+    .leaflet-popup-tip {
+        background: $white;
+        color: $black;
+    }
+
+    .leaflet-popup-content,
+    .popup-container,
+    .popup-container h1,
+    .popup-container p,
+    .popup-container a,
+    .popup-container .details-link,
+    .popup-container .select-link,
+    .leaflet-popup-close-button {
+        color: $black;
+    }
+
+    .popup-container .select-link,
+    .popup-container .details-link {
+        font-weight: 600;
+    }
 }

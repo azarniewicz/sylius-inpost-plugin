@@ -18,7 +18,12 @@ final readonly class InPostApiClient
     public function getPointByName(string $name): array
     {
         try {
-            $response = $this->httpClient->request('GET', sprintf('%s/%s', $this->apiBaseUrl, rawurlencode($name)));
+            $response = $this->httpClient->request('GET', sprintf('%s/%s', $this->apiBaseUrl, rawurlencode($name)), [
+                'query' => [
+                    'lang' => 'pl',
+                    'locale' => 'pl',
+                ],
+            ]);
 
             if ($response->getStatusCode() !== 200) {
                 throw new \RuntimeException('Unable to fetch InPost point details.');

@@ -23,6 +23,9 @@ final class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue('https://api-pl-points.easypack24.net/v1/points')
                 ->end()
+                ->scalarNode('geowidget_token')
+                    ->defaultValue('')
+                ->end()
             ->end()
         ;
 

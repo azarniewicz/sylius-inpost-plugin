@@ -4,6 +4,7 @@
 <div
     id="{{ previewId }}"
     class="bb-inpost-point-wrapper{% if not pointName %} bb-inpost-point-wrapper--empty{% endif %}"
+    data-bb-role="inpost-preview-wrapper"
     data-bb-api-points="{{ azarniewicz_sylius_inpost_api_base_url }}"
     {% if pointName %}
         data-bb-event="preview-inpost-point"

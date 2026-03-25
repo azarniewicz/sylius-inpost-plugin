@@ -5,7 +5,7 @@ export class ValidateNextBtn {
         this.submit = document.querySelector(nodeSelector);
         this.input = node;
         this.previewSelector = DEFAULT_SELECTORS.preview;
-        this.button = document.querySelector(DEFAULT_SELECTORS.button);
+        this.eventSource = document.querySelector('[data-bb-target="inpost-geowidget"]');
     }
 
     init() {
@@ -30,10 +30,10 @@ export class ValidateNextBtn {
         this.input.addEventListener('bb.inpost.point.deselected', () => {
             this._turnOnSubmit();
         });
-        this.button.addEventListener('bb.inpost.point.save.completed', () => {
+        this.eventSource?.addEventListener('bb.inpost.point.save.completed', () => {
             this._turnOnSubmit();
         });
-        this.button.addEventListener('bb.inpost.point.save.error', () => {
+        this.eventSource?.addEventListener('bb.inpost.point.save.error', () => {
             this._turnOffSubmit();
         });
     }
