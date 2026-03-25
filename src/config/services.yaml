@@ -5,8 +5,8 @@ services:
         public: false
 
     Azarniewicz\SyliusInPostPlugin\:
-        resource: '../src/*'
-        exclude: '../src/{Entity,Model,DependencyInjection}'
+        resource: '../*'
+        exclude: '../{Entity,Model,DependencyInjection}'
 
     # Factory
     azarniewicz.sylius_inpost_plugin.factory.inpost_point:
