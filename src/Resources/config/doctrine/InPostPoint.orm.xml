@@ -10,5 +10,8 @@
         </id>
 
         <field name="name" type="string" length="255" nullable="false"/>
+        <field name="addressLine1" column="address_line_1" type="string" length="255" nullable="true"/>
+        <field name="addressLine2" column="address_line_2" type="string" length="255" nullable="true"/>
+        <field name="locationDescription" column="location_description" type="string" length="255" nullable="true"/>
     </entity>
 </doctrine-mapping>

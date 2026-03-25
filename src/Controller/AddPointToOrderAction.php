@@ -77,10 +77,27 @@ final readonly class AddPointToOrderAction
         }
 
         $point->setName($name);
+        $point->setAddressLine1($this->getAddressLine($pointData, 'line1'));
+        $point->setAddressLine2($this->getAddressLine($pointData, 'line2'));
+        $point->setLocationDescription($this->getLocationDescription($pointData));
         $order->setPoint($point);
 
         $this->entityManager->flush();
 
         return new JsonResponse($pointData);
+    }
+
+    private function getAddressLine(array $pointData, string $key): ?string
+    {
+        $value = $pointData['address'][$key] ?? null;
+
+        return is_string($value) && $value !== '' ? $value : null;
+    }
+
+    private function getLocationDescription(array $pointData): ?string
+    {
+        $value = $pointData['location_description'] ?? null;
+
+        return is_string($value) && $value !== '' ? $value : null;
     }
 }
