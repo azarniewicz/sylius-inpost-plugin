@@ -48,7 +48,7 @@ Azarniewicz\SyliusInPostPlugin\AzarniewiczSyliusInPostPlugin::class => ['all' =>
 Add to `config/routes.yaml`:
 
 ```yaml
-azarnie_inpost:
+azarniewicz_inpost:
     resource: "@AzarniewiczSyliusInPostPlugin/Resources/config/routes.yaml"
 ```
 
