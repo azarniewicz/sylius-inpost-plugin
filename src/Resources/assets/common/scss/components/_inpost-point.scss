@@ -31,14 +31,18 @@
     }
 
     &-widget {
+        display: flex;
+        flex: 1 1 auto;
         width: 100%;
-        min-height: 32rem;
+        min-height: 0;
     }
 
     inpost-geowidget {
         display: block;
+        flex: 1 1 auto;
         width: 100%;
-        min-height: 32rem;
+        height: 100%;
+        min-height: 0;
     }
 
     &-img {

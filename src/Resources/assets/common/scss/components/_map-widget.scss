@@ -1,6 +1,8 @@
 .bb-inpost-modal {
     width: min(72rem, calc(100vw - 2rem));
+    height: min(52rem, calc(100vh - 2rem));
     max-width: 100%;
+    max-height: calc(100vh - 2rem);
     padding: 0;
     border: 0;
     border-radius: 1rem;
@@ -11,6 +13,9 @@
     }
 
     &__dialog {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         background: $white;
         border-radius: 1rem;
         overflow: hidden;
@@ -26,6 +31,9 @@
     }
 
     &__body {
+        display: flex;
+        flex: 1 1 auto;
+        min-height: 0;
         padding: $spacer;
     }
 
@@ -47,6 +55,8 @@
 @media (max-width: $mobile) {
     .bb-inpost-modal {
         width: calc(100vw - 1rem);
+        height: calc(100vh - 1rem);
+        max-height: calc(100vh - 1rem);
 
         &__header,
         &__body {
