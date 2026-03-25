@@ -1,5 +1,6 @@
 azarniewicz_sylius_inpost_plugin:
     ui:
+        close_modal: Close parcel locker picker
         select_point: Select Parcel Locker
         selected_point: Selected Parcel Locker
         no_point_selected: No parcel locker selected

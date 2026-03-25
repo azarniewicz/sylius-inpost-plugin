@@ -7,16 +7,38 @@
     data-bb-save-url="{{ path('azarniewicz_sylius_inpost_plugin_shop_add_point_to_order') }}"
     data-bb-csrf-token="{{ csrf_token('azarniewicz_sylius_inpost.add_point') }}"
 >
-    {% if azarniewicz_sylius_inpost_geowidget_token is not empty %}
-        <div class="bb-inpost-point-widget">
-            <inpost-geowidget
-                onpoint="azarniewicz-inpost-point-select"
-                token="{{ azarniewicz_sylius_inpost_geowidget_token }}"
-                language="pl"
-                config="parcelCollect"
-            ></inpost-geowidget>
-        </div>
-    {% endif %}
-
     {% include "@AzarniewiczSyliusInPostPlugin/InPostGeowidgetPreview.html.twig" with { order: null, wrapperId: wrapperId } %}
+
+    {% if azarniewicz_sylius_inpost_geowidget_token is not empty %}
+        <button class="bb-inpost-point-btn" data-bb-role="inpost-modal-open" type="button">
+            {{ 'azarniewicz_sylius_inpost_plugin.ui.select_point'|trans }}
+        </button>
+
+        <dialog class="bb-inpost-modal" data-bb-role="inpost-modal">
+            <div class="bb-inpost-modal__dialog">
+                <div class="bb-inpost-modal__header">
+                    <strong>{{ 'azarniewicz_sylius_inpost_plugin.ui.select_point'|trans }}</strong>
+                    <button
+                        class="bb-inpost-modal__close"
+                        data-bb-role="inpost-modal-close"
+                        type="button"
+                        aria-label="{{ 'azarniewicz_sylius_inpost_plugin.ui.close_modal'|trans }}"
+                    >
+                        &times;
+                    </button>
+                </div>
+
+                <div class="bb-inpost-modal__body">
+                    <div class="bb-inpost-point-widget">
+                        <inpost-geowidget
+                            onpoint="azarniewicz-inpost-point-select"
+                            token="{{ azarniewicz_sylius_inpost_geowidget_token }}"
+                            language="pl"
+                            config="parcelCollect"
+                        ></inpost-geowidget>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+    {% endif %}
 </div>

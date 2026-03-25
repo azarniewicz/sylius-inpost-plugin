@@ -1,29 +1,56 @@
-#widget-modal {
-    box-shadow: 0 0 0 100vw rgba($black, 0.1);
+.bb-inpost-modal {
+    width: min(72rem, calc(100vw - 2rem));
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 1.5rem 4rem rgba($black, 0.2);
 
-    &__map:not(.mobile) {
-        overflow: auto !important;
+    &::backdrop {
+        background: rgba($black, 0.45);
     }
 
-    .leaflet-popup-content-wrapper,
-    .leaflet-popup-tip {
+    &__dialog {
         background: $white;
-        color: $black;
+        border-radius: 1rem;
+        overflow: hidden;
     }
 
-    .leaflet-popup-content,
-    .popup-container,
-    .popup-container h1,
-    .popup-container p,
-    .popup-container a,
-    .popup-container .details-link,
-    .popup-container .select-link,
-    .leaflet-popup-close-button {
-        color: $black;
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacer;
+        padding: $spacer;
+        border-bottom: 1px solid $gray-200;
     }
 
-    .popup-container .select-link,
-    .popup-container .details-link {
-        font-weight: 600;
+    &__body {
+        padding: $spacer;
+    }
+
+    &__close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 0;
+        background: transparent;
+        color: $black;
+        font-size: 1.75rem;
+        line-height: 1;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: $mobile) {
+    .bb-inpost-modal {
+        width: calc(100vw - 1rem);
+
+        &__header,
+        &__body {
+            padding: $spacer * 0.75;
+        }
     }
 }

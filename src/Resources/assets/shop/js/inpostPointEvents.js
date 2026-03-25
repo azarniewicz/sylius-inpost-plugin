@@ -7,6 +7,9 @@ export class InpostPointEvents {
         this.widget = document.querySelector('[data-bb-target="inpost-geowidget"]');
         this.geowidget = this.widget?.querySelector('inpost-geowidget');
         this.preview = this.widget?.querySelector('[data-bb-role="inpost-preview-wrapper"]');
+        this.modal = this.widget?.querySelector('[data-bb-role="inpost-modal"]');
+        this.openButton = this.widget?.querySelector('[data-bb-role="inpost-modal-open"]');
+        this.closeButtons = [...(this.widget?.querySelectorAll('[data-bb-role="inpost-modal-close"]') || [])];
         this.shippingMethodCode = this.widget?.dataset.bbShippingMethodCode || 'inpost_point';
         this.saveUrl = this.widget?.dataset.bbSaveUrl || '';
         this.csrfToken = this.widget?.dataset.bbCsrfToken || '';
@@ -37,16 +40,41 @@ export class InpostPointEvents {
             this.showInpostPointSelector();
         }
 
+        this.watchModalActions();
         this.watchPointSelection();
         this.watchInputChanges();
     }
 
     hideInpostPointSelector() {
+        this.closeModal();
         document.querySelector('[data-bb-target="inpost-geowidget"]')?.classList.add('d-none');
     }
 
     showInpostPointSelector() {
         document.querySelector('[data-bb-target="inpost-geowidget"]')?.classList.remove('d-none');
+    }
+
+    watchModalActions() {
+        this.openButton?.addEventListener('click', () => {
+            this.openModal();
+        });
+
+        this.closeButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                this.closeModal();
+            });
+        });
+
+        this.modal?.addEventListener('click', (event) => {
+            if (event.target === this.modal) {
+                this.closeModal();
+            }
+        });
+
+        this.modal?.addEventListener('cancel', (event) => {
+            event.preventDefault();
+            this.closeModal();
+        });
     }
 
     watchPointSelection() {
@@ -119,12 +147,39 @@ export class InpostPointEvents {
                 new GeoWidgetPreview(this.preview).renderTemplate(data);
             }
 
+            this.closeModal();
             triggerCustomEvent(this.widget, 'inpost.point.save.completed', data);
         } catch (error) {
             triggerCustomEvent(this.widget, 'inpost.point.save.error', error);
         } finally {
             triggerCustomEvent(this.widget, 'inpost.point.save.after');
         }
+    }
+
+    openModal() {
+        if (!this.modal) {
+            return;
+        }
+
+        if (typeof this.modal.showModal === 'function') {
+            this.modal.showModal();
+            return;
+        }
+
+        this.modal.setAttribute('open', 'open');
+    }
+
+    closeModal() {
+        if (!this.modal) {
+            return;
+        }
+
+        if (typeof this.modal.close === 'function' && this.modal.open) {
+            this.modal.close();
+            return;
+        }
+
+        this.modal.removeAttribute('open');
     }
 }
 

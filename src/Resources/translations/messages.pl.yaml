@@ -1,5 +1,6 @@
 azarniewicz_sylius_inpost_plugin:
     ui:
+        close_modal: Zamknij okno wyboru paczkomatu
         select_point: Wybierz Paczkomat
         selected_point: Wybrany Paczkomat
         no_point_selected: Nie wybrano paczkomatu
