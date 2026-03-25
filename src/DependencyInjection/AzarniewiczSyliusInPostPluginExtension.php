@@ -30,6 +30,8 @@ class AzarniewiczSyliusInPostPluginExtension extends Extension implements Prepen
 
     public function prepend(ContainerBuilder $container): void
     {
+        $config = $this->processConfiguration(new Configuration(), $container->getExtensionConfig($this->getAlias()));
+
         /** @var array<string, array<string, string>> $metadata */
         $metadata = $container->getParameter('kernel.bundles_metadata');
         $bundlePath = $metadata['AzarniewiczSyliusInPostPlugin']['path'];
@@ -59,8 +61,8 @@ class AzarniewiczSyliusInPostPluginExtension extends Extension implements Prepen
                     $viewsDir => 'AzarniewiczSyliusInPostPlugin',
                 ],
                 'globals' => [
-                    'azarniewicz_sylius_inpost_shipping_method_code' => '%azarniewicz_sylius_inpost.shipping_method_code%',
-                    'azarniewicz_sylius_inpost_api_base_url' => '%azarniewicz_sylius_inpost.api_base_url%',
+                    'azarniewicz_sylius_inpost_shipping_method_code' => $config['shipping_method_code'],
+                    'azarniewicz_sylius_inpost_api_base_url' => rtrim($config['api_base_url'], '/'),
                 ],
             ]);
         }
